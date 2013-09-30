@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+                <form action="/index/s" method="get">
+                    <div class="input-group">
+                        <input type="text" name="words" class="form-control" placeholder="作者、关键字…" <%= raw 'value="' + params['words'] + '"' unless params['words'].empty? %> />
+                        <span class="input-group-btn">
+                            <input type="submit" value="search" class="btn btn-default"/>
+                        </span>
+                    </div>
+                </form>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <p>共找到<em><%= @search_results['response']['numFound'] %></em>条结果</p>
+        </div>
+    </div>
+<%
+    for doc in @search_results['response']['docs'] 
+        code = doc['code'][0]
+%>
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12"><p class="lead"><%= doc['file'] %></p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><p><%= code.length > 300 ? code[0, 300] : code %></p></div>
+        </div>
+    </div>
+    <br />
+<% 
+    end
+%>
+</div>
